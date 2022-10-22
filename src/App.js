@@ -16,12 +16,18 @@ import {
   useProvider,
   WagmiConfig,
 } from "wagmi";
-import { publicProvider } from "wagmi/providers/public";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { useMemo, useState, useEffect } from "react";
 import { ethers } from "ethers";
 const { chains, provider } = configureChains(
   [chain.mainnet],
-  [publicProvider()]
+  [jsonRpcProvider({
+    rpc:(chain)=>{
+      return {
+        http:"https://rpc.ankr.com/eth"
+      }
+    }
+  })]
 );
 
 const { connectors } = getDefaultWallets({
